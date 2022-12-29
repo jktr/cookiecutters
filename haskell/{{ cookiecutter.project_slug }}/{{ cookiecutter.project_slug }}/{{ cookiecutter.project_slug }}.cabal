@@ -1,0 +1,60 @@
+cabal-version: 3.0
+
+name:           {{ cookiecutter.project_slug }}
+version:        0.1.0.0
+--maintainer: TODO
+--copyright: TODO
+license:        {{ cookiecutter.license }}
+build-type:     Simple
+
+source-repository head
+  type: git
+  --location: TODO
+
+common shared-properties
+  default-language: GHC2021
+  default-extensions:
+    BlockArguments
+    DuplicateRecordFields
+    LambdaCase
+    OverloadedRecordDot
+    OverloadedStrings
+    ViewPatterns
+
+  ghc-options:
+    -Weverything
+    -Wno-all-missed-specialisations
+    -Wno-missing-deriving-strategies
+    -Wno-implicit-prelude
+    -Wno-missing-import-lists
+    -Wno-missing-kind-signatures
+    -Wno-missing-safe-haskell-mode
+    -Wno-unsafe
+    -Werror=incomplete-patterns
+    -Werror=missing-fields
+    -Werror=missing-methods
+
+common shared-executable-properties
+  import: shared-properties
+  ghc-options:
+    -threaded
+    -rtsopts "-with-rtsopts=-N -I0"
+
+library
+  import: shared-properties
+  exposed-modules:
+    {{ cookiecutter.__hs_module }}
+  other-modules:
+  build-depends:
+    base,
+  hs-source-dirs:
+    src
+
+executable {{ cookiecutter.project_slug }}
+  import: shared-executable-properties
+  build-depends:
+    base,
+    {{ cookiecutter.project_slug }},
+  hs-source-dirs:
+    app
+  main-is: Main.hs
