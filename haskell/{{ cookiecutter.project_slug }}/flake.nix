@@ -57,46 +57,12 @@
           nativeBuildInputs = [
             haskellPackages.haskell-language-server
             pkgs.cabal-install
-            #pkgs.cabal-plan
             pkgs.hlint
 
-            (pkgs.writeShellScriptBin "ghcid-wrapper" ''
-
-              readonly target=''${1:-lib:{{ cookiecutter.project_slug }}}
-              readonly executable=''${2:-lib:{{ cookiecutter.project_slug }}}
-
-              if [ -n "$executable" ]; then
-                readonly run_exe="cabal run \
-                  --disable-optimisation \
-                  --ghc-option -fdiagnostics-color=always \
-                  $executable \
-                  "
-              else
-                readonly run_exe=true
-              fi
-
-              ${pkgs.zsh}/bin/zsh -c 'print -P %F{yellow}Cleaning repository%f'
-              cabal clean
-
-              (
-                ${pkgs.git}/bin/git ls-files test
-                ${pkgs.git}/bin/git ls-files '*cabal'
-                ${pkgs.git}/bin/git ls-files 'flake.*'
-              )|\
-              ${pkgs.entr}/bin/entr -r \
-                ${pkgs.nix}/bin/nix develop -c \
-                  ${pkgs.ghcid}/bin/ghcid \
-                    --warnings \
-                    "--command=cabal repl $target" \
-                    "--test=:! \
-                      cabal test \
-                        --disable-optimisation \
-                        --test-show-details=direct \
-                        --ghc-option -fdiagnostics-color=always && \
-                      $run_exe && \
-                      ${pkgs.zsh}/bin/zsh -c 'print -P %F{green}Build and tests passed%f' \
-                      "
-            '')
+            # in addition, for ghcid-wrapper
+            pkgs.zsh
+            pkgs.entr
+            pkgs.ghcid
           ];
         };
       }
