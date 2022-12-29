@@ -5,7 +5,14 @@
   with nixpkgs.lib;
   let
     systems = platforms.unix;
-    forAllSystems = genAttrs systems;
+    forAllSystems = fn: (genAttrs systems (system:
+      fn (import nixpkgs {
+        inherit system;
+        overlays = [
+          self.overlays.default
+        ];
+      })
+    ));
     getHaskellPackages = pkgs: pattern: pipe pkgs.haskell.packages [
       attrNames
       (filter (x: !isNull (strings.match pattern x)))
@@ -14,13 +21,7 @@
       head
     ];
   in {
-    packages = forAllSystems (system: let
-      pkgs = import nixpkgs {
-        inherit system
-        overlays = [
-          self.overlays.default
-        ];
-      };
+    packages = forAllSystems (pkgs: let
       {{ cookiecutter.ghc }} = getHaskellPackages pkgs "{{ cookiecutter.ghc }}.";
     in rec {
       default = {{ cookiecutter.project_slug }};
@@ -40,14 +41,8 @@
       };
     };
 
-    devShells = forAllSystems (system:
+    devShells = forAllSystems (pkgs:
       let
-        pkgs = import nixpkgs {
-          inherit system
-          overlays = [
-            self.overlays.default
-          ];
-        };
         haskellPackages = getHaskellPackages pkgs "{{ cookiecutter.ghc }}.";
       in rec {
         default = haskellPackages.shellFor {
