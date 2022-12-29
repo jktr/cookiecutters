@@ -15,9 +15,12 @@
     ];
   in {
     packages = forAllSystems (system: let
-      pkgs = import nixpkgs { inherit system; overlays = [
-        self.overlays.default
-      ]; };
+      pkgs = import nixpkgs {
+        inherit system
+        overlays = [
+          self.overlays.default
+        ];
+      };
       {{ cookiecutter.ghc }} = getHaskellPackages pkgs "{{ cookiecutter.ghc }}.";
     in rec {
       default = {{ cookiecutter.project_slug }};
@@ -39,9 +42,12 @@
 
     devShells = forAllSystems (system:
       let
-        pkgs = import nixpkgs { inherit system; overlays = [
-          self.overlays.default
-        ]; };
+        pkgs = import nixpkgs {
+          inherit system
+          overlays = [
+            self.overlays.default
+          ];
+        };
         haskellPackages = getHaskellPackages pkgs "{{ cookiecutter.ghc }}.";
       in rec {
         default = haskellPackages.shellFor {
