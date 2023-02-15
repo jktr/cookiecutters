@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-readonly target=${1}
+readonly target=${1:-lib:{{ cookiecutter.project_slug }}}
 readonly executable=${2:-}
 
 if [[ -n $executable ]]
