@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-# generate flake.lock
-nix flake metadata
-
 {% if cookiecutter.nixpkgs %}
 nix flake lock --override-input nixpkgs 'github:NixOS/nixpkgs/{{ cookiecutter.nixpkgs }}'
 {% endif %}
+
+# show flake setup (and generate flake.lock if we don't have a pinned nixpkgs version)
+nix flake metadata
 
 git init
 git add -A
