@@ -32,6 +32,7 @@ common shared-properties
     -Wno-unsafe
     -Werror=incomplete-patterns
     -Werror=missing-fields
+    -Werror=missing-home-modules
     -Werror=missing-methods
 
 common shared-executable-properties
