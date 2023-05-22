@@ -2,7 +2,7 @@
   "project_name": "",
   "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '-') }}",
   "__hs_module": "{{ cookiecutter.project_slug.title().replace('-', '') }}",
-  "license": "BSD-2-Clause",
+  "license": [ "BSD-2-Clause", "GPL-3.0-or-later", "CC0-1.0" ],
   "ghc": "ghc92",
   "nixpkgs": ""
 }
