@@ -1,0 +1,16 @@
+[project]
+name = "{{ cookiecutter.project_slug }}"
+version = "0.0.1"
+readme = "README.md"
+dependencies = [
+{%- for DEP in cookiecutter.dependencies.default %}
+  "{{ DEP }}",
+{%- endfor %}
+]
+
+[build-system]
+requires = [ "setuptools>=61.0" ]
+build-backend = "setuptools.build_meta"
+
+[project.scripts]
+{{ cookiecutter.project_slug }} = "{{ cookiecutter.__py_module }}:main"

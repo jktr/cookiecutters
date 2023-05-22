@@ -1,4 +1,9 @@
 {
   "project_name": "",
-  "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '-') }}"
+  "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '-') }}",
+  "__py_module": "{{ cookiecutter.project_slug.replace('-', '_') }}",
+  "license": [ "BSD-2-Clause", "GPL-3.0-or-later", "CC0-1.0" ],
+  "python": "python3",
+  "dependencies": { "default": [] },
+  "nixpkgs": ""
 }
