@@ -9,4 +9,4 @@ nix flake metadata
 
 git init
 git add -A
-git commit -m 'inital commit'
+git commit -m 'initial commit'
