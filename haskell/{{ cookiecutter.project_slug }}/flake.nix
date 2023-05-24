@@ -33,9 +33,6 @@
         haskell = prev.haskell // {
           packageOverrides = hfinal: hprev: prev.haskell.packageOverrides hfinal hprev // {
             {{ cookiecutter.project_slug }} = hfinal.callCabal2nix "{{ cookiecutter.project_slug }}" ./{{ cookiecutter.project_slug }} {};
-
-            # https://gitlab.haskell.org/ghc/ghc/-/issues/22425
-            ListLike = final.haskell.lib.dontCheck hprev.ListLike;
           };
         };
       };
