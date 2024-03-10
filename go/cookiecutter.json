@@ -1,0 +1,7 @@
+{
+  "project_name": "",
+  "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '-') }}",
+  "module_path": "",
+  "license": [ "BSD-2-Clause", "GPL-3.0-or-later", "CC0-1.0" ],
+  "nixpkgs": ""
+}
