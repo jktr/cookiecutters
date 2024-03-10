@@ -48,7 +48,10 @@
     devShells = forAllSystems (pkgs: {
       default = pkgs.mkShell {
         buildInputs
-          =  [ pkgs.{{ cookiecutter.python }} ]
+          =  [
+            pkgs.{{ cookiecutter.python }}
+            pkgs.nodePackages.pyright
+          ]
           ++ pkgs.{{ cookiecutter.project_slug }}.buildInputs
           ++ pkgs.{{ cookiecutter.project_slug }}.propagatedBuildInputs;
 
