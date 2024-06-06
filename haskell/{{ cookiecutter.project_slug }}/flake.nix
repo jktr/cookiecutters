@@ -2,9 +2,8 @@
   inputs.nixpkgs.url = github:NixOS/nixpkgs/nixos-unstable;
 
   outputs = { self, nixpkgs }:
-  with nixpkgs.lib;
   let
-    systems = platforms.unix;
+    systems = nixpkgs.lib.platforms.unix;
     forAllSystems = fn: (genAttrs systems (system:
       fn (import nixpkgs {
         inherit system;
@@ -13,12 +12,12 @@
         ];
       })
     ));
-    getHaskellPackages = pkgs: pattern: pipe pkgs.haskell.packages [
-      attrNames
-      (filter (x: !isNull (strings.match pattern x)))
-      (sort (x: y: x>y))
+    getHaskellPackages = pkgs: pattern: nixpkgs.lib.pipe pkgs.haskell.packages [
+      nixpkgs.lib.attrNames
+      (nixpkgs.lib.filter (x: !isNull (nixpkgs.lib.strings.match pattern x)))
+      (nixpkgs.lib.sort (x: y: x>y))
       (map (x: pkgs.haskell.packages.${x}))
-      head
+      nixpkgs.lib.head
     ];
   in {
     packages = forAllSystems (pkgs: let

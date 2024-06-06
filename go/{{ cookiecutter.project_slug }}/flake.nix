@@ -2,10 +2,9 @@
   inputs.nixpkgs.url = github:NixOS/nixpkgs/nixos-unstable;
 
   outputs = { self, nixpkgs }:
-  with nixpkgs.lib;
   let
-    systems = platforms.unix;
-    forAllSystems = fn: (genAttrs systems (system:
+    systems = nixpkgs.lib.platforms.unix;
+    forAllSystems = fn: (nixpkgs.lib.genAttrs systems (system:
       fn (import nixpkgs {
         inherit system;
         overlays = [
